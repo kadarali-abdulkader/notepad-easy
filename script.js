@@ -18,7 +18,7 @@ function setTheme(themeName) {
 // History Management
 let notesHistory = JSON.parse(localStorage.getItem('notesHistory')) || [];
 
-function saveToHistory(filename, heading, body, conclusion) {
+function saveToHistory(filename, heading, body) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format: DD-MM-YYYY
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -28,7 +28,6 @@ function saveToHistory(filename, heading, body, conclusion) {
         filename,
         heading,
         body,
-        conclusion,
         date: dateStr,
         time: timeStr
     };
@@ -102,7 +101,6 @@ function loadNote(note) {
     document.getElementById('filename').value = note.filename;
     document.getElementById('heading').value = note.heading;
     document.getElementById('body').value = note.body;
-    document.getElementById('conclusion').value = note.conclusion || ''; // Handle missing conclusion
 }
 
 function newNote() {
@@ -122,17 +120,15 @@ async function saveNote() {
     const filenameInput = document.getElementById('filename');
     const headingInput = document.getElementById('heading');
     const bodyInput = document.getElementById('body');
-    const conclusionInput = document.getElementById('conclusion');
 
     const filename = filenameInput.value.trim() || 'untitled-note';
     const heading = headingInput.value;
     const body = bodyInput.value;
-    const conclusion = conclusionInput.value;
 
     // Save to History
-    saveToHistory(filename, heading, body, conclusion);
+    saveToHistory(filename, heading, body);
 
-    const content = `Heading: ${heading}\n\n${body}\n\nConclusion: ${conclusion}`;
+    const content = `Heading: ${heading}\n\n${body}`;
 
     // Modern browsers: Try using the File System Access API
     if (window.showSaveFilePicker) {

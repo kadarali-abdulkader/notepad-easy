@@ -321,11 +321,6 @@ textarea:focus {
     line-height: 1.6;
 }
 
-.note-conclusion {
-    min-height: 80px;
-    resize: vertical;
-}
-
 .actions {
     margin-top: 2rem;
     display: flex;
