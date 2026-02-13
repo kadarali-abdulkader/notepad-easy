@@ -1,4 +1,5 @@
 :root {
+    /* Default (Light) Theme */
     --primary-color: #6366f1;
     /* Indigo */
     --primary-hover: #4f46e5;
@@ -7,9 +8,52 @@
     --text-color: #1f2937;
     --label-color: #6b7280;
     --border-color: #e5e7eb;
+    --input-bg: #f9fafb;
+    --input-focus-bg: #ffffff;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --radius: 12px;
+}
+
+/* Dark Theme */
+body.theme-dark {
+    --primary-color: #818cf8;
+    --primary-hover: #6366f1;
+    --bg-color: #111827;
+    --card-bg: #1f2937;
+    --text-color: #f9fafb;
+    --label-color: #9ca3af;
+    --border-color: #374151;
+    --input-bg: #111827;
+    --input-focus-bg: #1f2937;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* Midnight Theme */
+body.theme-midnight {
+    --primary-color: #38bdf8;
+    --primary-hover: #0ea5e9;
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #e2e8f0;
+    --label-color: #94a3b8;
+    --border-color: #334155;
+    --input-bg: #0f172a;
+    --input-focus-bg: #1e293b;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* Nature Theme */
+body.theme-nature {
+    --primary-color: #10b981;
+    --primary-hover: #059669;
+    --bg-color: #ecfdf5;
+    --card-bg: #ffffff;
+    --text-color: #064e3b;
+    --label-color: #34d399;
+    --border-color: #a7f3d0;
+    --input-bg: #f0fdf4;
+    --input-focus-bg: #ffffff;
 }
 
 * {
@@ -27,6 +71,25 @@ body {
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme Selector */
+.theme-selector {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.theme-selector:focus {
+    border-color: var(--primary-color);
 }
 
 /* Login Overlay Styles */
