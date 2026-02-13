@@ -41,6 +41,26 @@
     --accent-hover: #7e22ce;
 }
 
+[data-theme="green"] {
+    --bg-color: #f0fdf4;
+    --text-color: #14532d;
+    --glass-bg: rgba(220, 252, 231, 0.7);
+    --glass-border: rgba(187, 247, 208, 0.5);
+    --input-bg: rgba(240, 253, 244, 0.5);
+    --accent-color: #16a34a;
+    --accent-hover: #15803d;
+}
+
+[data-theme="red"] {
+    --bg-color: #fef2f2;
+    --text-color: #7f1d1d;
+    --glass-bg: rgba(254, 226, 226, 0.7);
+    --glass-border: rgba(252, 165, 165, 0.5);
+    --input-bg: rgba(254, 242, 242, 0.5);
+    --accent-color: #dc2626;
+    --accent-hover: #b91c1c;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
