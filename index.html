@@ -10,75 +10,35 @@
 </head>
 
 <body>
-    <!-- Login Overlay -->
-    <div id="login-overlay" class="login-overlay">
-        <div class="login-card">
-            <h2>Welcome to Premium Notepad</h2>
-            <p>Please sign in to continue.</p>
-            <button id="google-signin-btn" class="google-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
-                <span>Sign in with Google</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="container" id="app-container" style="display: none;">
+    <div class="app-container">
         <header>
-            <div class="header-content">
-                <h1>New Note</h1>
-                <div id="user-info" class="user-info">
-                    <select id="theme-selector" class="theme-selector">
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="midnight">Midnight</option>
-                        <option value="nature">Nature</option>
-                    </select>
-                    <img id="user-photo" src="" alt="User" class="user-photo">
-                    <span id="user-name">User</span>
-                    <button id="sign-out-btn" class="sign-out-btn">Sign Out</button>
-                </div>
+            <h1>Notepad</h1>
+            <div class="theme-controls">
+                <button onclick="setTheme('light')" class="theme-btn light" title="Light Mode"></button>
+                <button onclick="setTheme('dark')" class="theme-btn dark" title="Dark Mode"></button>
+                <button onclick="setTheme('blue')" class="theme-btn blue" title="Blue Theme"></button>
+                <button onclick="setTheme('purple')" class="theme-btn purple" title="Purple Theme"></button>
             </div>
         </header>
+
         <main>
             <div class="input-group">
-                <label for="heading">Heading</label>
-                <input type="text" id="heading" placeholder="Enter note title..." autocomplete="off">
+                <label for="filename">File Name</label>
+                <input type="text" id="filename" placeholder="Enter file name (e.g., my-note)">
             </div>
 
-            <div class="input-group">
-                <label for="body">Body</label>
-                <textarea id="body" placeholder="Start typing your note here..."></textarea>
+            <div class="notepad-editor">
+                <input type="text" id="heading" class="note-heading" placeholder="Page Heading">
+                <textarea id="body" class="note-body" placeholder="Write your note body here..."></textarea>
+                <textarea id="conclusion" class="note-conclusion" placeholder="Conclusion..."></textarea>
             </div>
 
-            <div class="input-group">
-                <label for="conclusion">Conclusion</label>
-                <textarea id="conclusion" placeholder="Summarize or add a conclusion..." rows="3"></textarea>
-            </div>
-
-            <div class="file-actions">
-                <div class="input-group filename-group">
-                    <label for="filename">Filename</label>
-                    <div class="filename-wrapper">
-                        <input type="text" id="filename" placeholder="note" value="my-note">
-                        <span class="extension">.txt</span>
-                    </div>
-                </div>
-                <button id="save-btn">Save Note</button>
+            <div class="actions">
+                <button onclick="saveNote()" class="save-btn">Save Note</button>
             </div>
         </main>
     </div>
-
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        // Expose Firebase functions to window so script.js can use them if needed, 
-        // or effectively just run the logic here or in script.js as a module.
-        // For simplicity, we'll keep logic in script.js but we need to supply the imports to it or make script.js a module.
-        // Let's make script.js a module in the script tag below.
-    </script>
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
