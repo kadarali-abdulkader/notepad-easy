@@ -39,6 +39,31 @@ const userPhoto = document.getElementById('user-photo');
 const userName = document.getElementById('user-name');
 const saveBtn = document.getElementById('save-btn');
 const themeSelector = document.getElementById('theme-selector');
+const installBtn = document.getElementById('install-btn');
+
+// PWA Install Logic
+let deferredPrompt;
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('Service Worker Registered'));
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+    }
+});
 
 // Theme Management
 const currentTheme = localStorage.getItem('theme') || 'light';
