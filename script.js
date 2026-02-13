@@ -44,9 +44,11 @@ function renderHistory(filterText = '') {
     // Filter notes based on search
     const filteredNotes = notesHistory.filter(note => {
         const searchText = filterText.toLowerCase();
-        // User requested to search "the name what i save", so checking filename primarily.
-        // Removed directory body/heading search to avoid confusion if user expects filename match only.
-        return note.filename.toLowerCase().includes(searchText);
+        return (
+            note.filename.toLowerCase().includes(searchText) ||
+            note.heading.toLowerCase().includes(searchText) ||
+            note.body.toLowerCase().includes(searchText)
+        );
     });
 
     // Group by Date
@@ -59,7 +61,6 @@ function renderHistory(filterText = '') {
     }, {});
 
     // Render Groups
-    // If we have a search term, we should probably expand the date groups automatically so the user sees the results.
     const shouldExpand = filterText.length > 0;
 
     for (const [date, notes] of Object.entries(groupedNotes)) {
@@ -68,7 +69,7 @@ function renderHistory(filterText = '') {
 
         const dateHeader = document.createElement('div');
         dateHeader.className = 'date-header';
-        dateHeader.innerText = `📅 ${date} (${notes.length})`; // Added count
+        dateHeader.innerText = `📅 ${date} (${notes.length})`;
         dateHeader.onclick = () => {
             const list = dateGroup.querySelector('.note-items-container');
             list.style.display = list.style.display === 'none' ? 'block' : 'none';
@@ -76,16 +77,19 @@ function renderHistory(filterText = '') {
 
         const itemsContainer = document.createElement('div');
         itemsContainer.className = 'note-items-container';
-        // Auto-expand if searching, otherwise date groups are collapsed by default? 
-        // Or keep user's previous toggle state? For simplicity: Expand if searching.
         itemsContainer.style.display = shouldExpand ? 'block' : 'none';
 
         notes.forEach(note => {
             const noteItem = document.createElement('div');
             noteItem.className = 'note-item';
+
+            // Highlight matching text in display
+            const displayFilename = highlightText(note.filename, filterText);
+            const displayHeading = highlightText(note.heading, filterText);
+
             noteItem.innerHTML = `
-                <h4>${note.filename}</h4>
-                <p>${note.heading}</p>
+                <h4>${displayFilename}</h4>
+                <p>${displayHeading}</p>
             `;
             noteItem.onclick = () => loadNote(note);
             itemsContainer.appendChild(noteItem);
@@ -95,6 +99,12 @@ function renderHistory(filterText = '') {
         dateGroup.appendChild(itemsContainer);
         historyList.appendChild(dateGroup);
     }
+}
+
+function highlightText(text, filter) {
+    if (!filter) return text;
+    const regex = new RegExp(`(${filter})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
 }
 
 function loadNote(note) {

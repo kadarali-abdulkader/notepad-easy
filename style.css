@@ -219,6 +219,13 @@ header {
     text-overflow: ellipsis;
 }
 
+mark {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
 h1 {
     font-weight: 600;
     margin: 0;
