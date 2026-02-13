@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Notepad</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>New Note</h1>
+        </header>
+        <main>
+            <div class="input-group">
+                <label for="heading">Heading</label>
+                <input type="text" id="heading" placeholder="Enter note title..." autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <label for="body">Body</label>
+                <textarea id="body" placeholder="Start typing your note here..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="conclusion">Conclusion</label>
+                <textarea id="conclusion" placeholder="Summarize or add a conclusion..." rows="3"></textarea>
+            </div>
+
+            <div class="file-actions">
+                <div class="input-group filename-group">
+                    <label for="filename">Filename</label>
+                    <div class="filename-wrapper">
+                        <input type="text" id="filename" placeholder="note" value="my-note">
+                        <span class="extension">.txt</span>
+                    </div>
+                </div>
+                <button id="save-btn">Save Note</button>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
