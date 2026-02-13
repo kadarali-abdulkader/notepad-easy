@@ -18,7 +18,7 @@ function setTheme(themeName) {
 // History Management
 let notesHistory = JSON.parse(localStorage.getItem('notesHistory')) || [];
 
-function saveToHistory(filename, heading, body, conclusion) {
+function saveToHistory(filename, heading, body) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format: DD-MM-YYYY
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -27,8 +27,7 @@ function saveToHistory(filename, heading, body, conclusion) {
         id: Date.now(),
         filename,
         heading,
-        body,
-        conclusion,
+        body
         date: dateStr,
         time: timeStr
     };
@@ -183,3 +182,4 @@ async function saveNote() {
         }, 100);
     }
 }
+
