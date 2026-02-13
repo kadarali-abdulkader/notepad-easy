@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const saveBtn = document.getElementById('save-btn');
 
-    saveBtn.addEventListener('click', () => {
+    saveBtn.addEventListener('click', async () => {
         const heading = document.getElementById('heading').value.trim();
         const body = document.getElementById('body').value.trim();
         const conclusion = document.getElementById('conclusion').value.trim();
@@ -36,19 +36,48 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `CONCLUSION:\n${conclusion}\n`;
         }
 
-        // Create Blob
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
+        try {
+            // Check if File System Access API is supported
+            if (window.showSaveFilePicker) {
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: `${filename}.txt`,
+                    types: [{
+                        description: 'Text Files',
+                        accept: { 'text/plain': ['.txt'] },
+                    }],
+                });
 
-        // Create Anchor link to download
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${filename}.txt`;
-        document.body.appendChild(a);
-        a.click();
+                const writable = await handle.createWritable();
+                await writable.write(content);
+                await writable.close();
 
-        // Cleanup
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+                // Refresh immediately after successful save
+                location.reload();
+            } else {
+                // Fallback for browsers that don't support the API
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${filename}.txt`;
+                document.body.appendChild(a);
+                a.click();
+
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // Refresh after a short delay to allow download to start
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        } catch (err) {
+            // User cancelled the picker or an error occurred
+            if (err.name !== 'AbortError') {
+                console.error('Failed to save file:', err);
+                alert('An error occurred while saving the file.');
+            }
+        }
     });
 });
