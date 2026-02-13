@@ -135,6 +135,14 @@ h1 {
     background-color: #9333ea;
 }
 
+.theme-btn.green {
+    background-color: #16a34a;
+}
+
+.theme-btn.red {
+    background-color: #dc2626;
+}
+
 .input-group {
     margin-bottom: 1.5rem;
 }
