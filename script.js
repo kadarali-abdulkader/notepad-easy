@@ -18,7 +18,7 @@ function setTheme(themeName) {
 // History Management
 let notesHistory = JSON.parse(localStorage.getItem('notesHistory')) || [];
 
-function saveToHistory(filename, heading, body) {
+function saveToHistory(filename, heading, body, conclusion) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format: DD-MM-YYYY
     const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -28,6 +28,7 @@ function saveToHistory(filename, heading, body) {
         filename,
         heading,
         body,
+        conclusion,
         date: dateStr,
         time: timeStr
     };
@@ -44,11 +45,9 @@ function renderHistory(filterText = '') {
     // Filter notes based on search
     const filteredNotes = notesHistory.filter(note => {
         const searchText = filterText.toLowerCase();
-        return (
-            note.filename.toLowerCase().includes(searchText) ||
-            note.heading.toLowerCase().includes(searchText) ||
-            note.body.toLowerCase().includes(searchText)
-        );
+        // User requested to search "the name what i save", so checking filename primarily.
+        // Removed directory body/heading search to avoid confusion if user expects filename match only.
+        return note.filename.toLowerCase().includes(searchText);
     });
 
     // Group by Date
@@ -61,13 +60,16 @@ function renderHistory(filterText = '') {
     }, {});
 
     // Render Groups
+    // If we have a search term, we should probably expand the date groups automatically so the user sees the results.
+    const shouldExpand = filterText.length > 0;
+
     for (const [date, notes] of Object.entries(groupedNotes)) {
         const dateGroup = document.createElement('div');
         dateGroup.className = 'date-group';
 
         const dateHeader = document.createElement('div');
         dateHeader.className = 'date-header';
-        dateHeader.innerText = `📅 ${date}`;
+        dateHeader.innerText = `📅 ${date} (${notes.length})`; // Added count
         dateHeader.onclick = () => {
             const list = dateGroup.querySelector('.note-items-container');
             list.style.display = list.style.display === 'none' ? 'block' : 'none';
@@ -75,6 +77,9 @@ function renderHistory(filterText = '') {
 
         const itemsContainer = document.createElement('div');
         itemsContainer.className = 'note-items-container';
+        // Auto-expand if searching, otherwise date groups are collapsed by default? 
+        // Or keep user's previous toggle state? For simplicity: Expand if searching.
+        itemsContainer.style.display = shouldExpand ? 'block' : 'none';
 
         notes.forEach(note => {
             const noteItem = document.createElement('div');
@@ -97,6 +102,12 @@ function loadNote(note) {
     document.getElementById('filename').value = note.filename;
     document.getElementById('heading').value = note.heading;
     document.getElementById('body').value = note.body;
+    document.getElementById('conclusion').value = note.conclusion || ''; // Handle missing conclusion
+}
+
+function newNote() {
+    // Reloads the page to clear everything and start fresh
+    location.reload();
 }
 
 function filterHistory() {
@@ -119,7 +130,7 @@ async function saveNote() {
     const conclusion = conclusionInput.value;
 
     // Save to History
-    saveToHistory(filename, heading, body);
+    saveToHistory(filename, heading, body, conclusion);
 
     const content = `Heading: ${heading}\n\n${body}\n\nConclusion: ${conclusion}`;
 

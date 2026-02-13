@@ -12,7 +12,10 @@
 <body>
     <div class="app-container">
         <header>
-            <h1>Notepad</h1>
+            <div class="header-left">
+                <h1>Notepad</h1>
+                <button onclick="newNote()" class="new-note-btn">New +</button>
+            </div>
             <div class="theme-controls">
                 <button onclick="setTheme('light')" class="theme-btn light" title="Light Mode"></button>
                 <button onclick="setTheme('dark')" class="theme-btn dark" title="Dark Mode"></button>

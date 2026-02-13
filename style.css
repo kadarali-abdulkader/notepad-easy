@@ -97,6 +97,29 @@ header {
     flex-shrink: 0;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.new-note-btn {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.new-note-btn:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
 .main-layout {
     display: flex;
     gap: 2rem;
