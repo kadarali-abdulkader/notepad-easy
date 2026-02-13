@@ -15,6 +15,98 @@ function setTheme(themeName) {
     }
 })();
 
+// History Management
+let notesHistory = JSON.parse(localStorage.getItem('notesHistory')) || [];
+
+function saveToHistory(filename, heading, body) {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-GB').replace(/\//g, '-'); // Format: DD-MM-YYYY
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    const newNote = {
+        id: Date.now(),
+        filename,
+        heading,
+        body,
+        date: dateStr,
+        time: timeStr
+    };
+
+    notesHistory.unshift(newNote); // Add to beginning
+    localStorage.setItem('notesHistory', JSON.stringify(notesHistory));
+    renderHistory();
+}
+
+function renderHistory(filterText = '') {
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = '';
+
+    // Filter notes based on search
+    const filteredNotes = notesHistory.filter(note => {
+        const searchText = filterText.toLowerCase();
+        return (
+            note.filename.toLowerCase().includes(searchText) ||
+            note.heading.toLowerCase().includes(searchText) ||
+            note.body.toLowerCase().includes(searchText)
+        );
+    });
+
+    // Group by Date
+    const groupedNotes = filteredNotes.reduce((groups, note) => {
+        if (!groups[note.date]) {
+            groups[note.date] = [];
+        }
+        groups[note.date].push(note);
+        return groups;
+    }, {});
+
+    // Render Groups
+    for (const [date, notes] of Object.entries(groupedNotes)) {
+        const dateGroup = document.createElement('div');
+        dateGroup.className = 'date-group';
+
+        const dateHeader = document.createElement('div');
+        dateHeader.className = 'date-header';
+        dateHeader.innerText = `📅 ${date}`;
+        dateHeader.onclick = () => {
+            const list = dateGroup.querySelector('.note-items-container');
+            list.style.display = list.style.display === 'none' ? 'block' : 'none';
+        };
+
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'note-items-container';
+
+        notes.forEach(note => {
+            const noteItem = document.createElement('div');
+            noteItem.className = 'note-item';
+            noteItem.innerHTML = `
+                <h4>${note.filename}</h4>
+                <p>${note.heading}</p>
+            `;
+            noteItem.onclick = () => loadNote(note);
+            itemsContainer.appendChild(noteItem);
+        });
+
+        dateGroup.appendChild(dateHeader);
+        dateGroup.appendChild(itemsContainer);
+        historyList.appendChild(dateGroup);
+    }
+}
+
+function loadNote(note) {
+    document.getElementById('filename').value = note.filename;
+    document.getElementById('heading').value = note.heading;
+    document.getElementById('body').value = note.body;
+}
+
+function filterHistory() {
+    const searchText = document.getElementById('history-search').value;
+    renderHistory(searchText);
+}
+
+// Initial Render
+renderHistory();
+
 async function saveNote() {
     const filenameInput = document.getElementById('filename');
     const headingInput = document.getElementById('heading');
@@ -25,6 +117,9 @@ async function saveNote() {
     const heading = headingInput.value;
     const body = bodyInput.value;
     const conclusion = conclusionInput.value;
+
+    // Save to History
+    saveToHistory(filename, heading, body);
 
     const content = `Heading: ${heading}\n\n${body}\n\nConclusion: ${conclusion}`;
 

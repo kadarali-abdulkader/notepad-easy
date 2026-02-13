@@ -74,8 +74,8 @@ body {
 }
 
 .app-container {
-    width: 90%;
-    max-width: 800px;
+    width: 95%;
+    max-width: 1200px;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -84,6 +84,9 @@ body {
     padding: 2rem;
     box-shadow: var(--shadow);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
 }
 
 header {
@@ -91,6 +94,106 @@ header {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    flex-shrink: 0;
+}
+
+.main-layout {
+    display: flex;
+    gap: 2rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+.editor-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.history-sidebar {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 1px solid var(--glass-border);
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+}
+
+.history-sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: var(--input-bg);
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.date-group {
+    margin-bottom: 1rem;
+}
+
+.date-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.date-header:hover {
+    opacity: 1;
+}
+
+.note-item {
+    background: var(--input-bg);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    border: 1px solid transparent;
+}
+
+.note-item:hover {
+    transform: translateX(4px);
+    background: var(--glass-border);
+}
+
+.note-item h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.note-item p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 h1 {
