@@ -1,5 +1,6 @@
 :root {
-    --primary-color: #6366f1; /* Indigo */
+    --primary-color: #6366f1;
+    /* Indigo */
     --primary-hover: #4f46e5;
     --bg-color: #f3f4f6;
     --card-bg: #ffffff;
@@ -28,6 +29,68 @@ body {
     padding: 20px;
 }
 
+/* Login Overlay Styles */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(243, 244, 246, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-card h2 {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.login-card p {
+    color: var(--label-color);
+    margin-bottom: 30px;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: white;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.google-btn:hover {
+    background-color: #f8faff;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+}
+
+.google-btn img {
+    width: 18px;
+    height: 18px;
+}
+
+/* App Container */
 .container {
     background-color: var(--card-bg);
     padding: 40px;
@@ -35,17 +98,57 @@ body {
     box-shadow: var(--shadow-md);
     width: 100%;
     max-width: 600px;
-    transition: transform 0.2s ease;
+    transition: opacity 0.3s ease;
+}
+
+/* Header & User Info */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 header h1 {
     font-weight: 600;
     font-size: 1.5rem;
-    margin-bottom: 30px;
     color: var(--text-color);
-    text-align: center;
+    margin: 0;
 }
 
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#user-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.sign-out-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 8px;
+}
+
+.sign-out-btn:hover {
+    text-decoration: underline;
+}
+
+/* Form Styles */
 .input-group {
     margin-bottom: 20px;
 }
@@ -68,14 +171,15 @@ textarea {
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
-    background-color: #f9fafb;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
 input[type="text"]:focus,
 textarea:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    background-color: #fff;
+    background-color: var(--input-focus-bg);
 }
 
 textarea#body {
@@ -144,12 +248,23 @@ button#save-btn:active {
     .container {
         padding: 20px;
     }
-    
+
     .file-actions {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+
     button#save-btn {
         width: 100%;
     }

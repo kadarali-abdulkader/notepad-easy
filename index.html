@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,43 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-card">
+            <h2>Welcome to Premium Notepad</h2>
+            <p>Please sign in to continue.</p>
+            <button id="google-signin-btn" class="google-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container" id="app-container" style="display: none;">
         <header>
-            <h1>New Note</h1>
+            <div class="header-content">
+                <h1>New Note</h1>
+                <div id="user-info" class="user-info">
+                    <select id="theme-selector" class="theme-selector">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="midnight">Midnight</option>
+                        <option value="nature">Nature</option>
+                    </select>
+                    <img id="user-photo" src="" alt="User" class="user-photo">
+                    <span id="user-name">User</span>
+                    <button id="sign-out-btn" class="sign-out-btn">Sign Out</button>
+                </div>
+            </div>
         </header>
         <main>
             <div class="input-group">
                 <label for="heading">Heading</label>
                 <input type="text" id="heading" placeholder="Enter note title..." autocomplete="off">
             </div>
-            
+
             <div class="input-group">
                 <label for="body">Body</label>
                 <textarea id="body" placeholder="Start typing your note here..."></textarea>
@@ -40,6 +67,18 @@
             </div>
         </main>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Expose Firebase functions to window so script.js can use them if needed, 
+        // or effectively just run the logic here or in script.js as a module.
+        // For simplicity, we'll keep logic in script.js but we need to supply the imports to it or make script.js a module.
+        // Let's make script.js a module in the script tag below.
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
